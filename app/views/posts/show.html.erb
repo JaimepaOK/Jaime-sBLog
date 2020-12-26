@@ -1,0 +1,59 @@
+<%# show all posts %>
+
+
+
+<h2 align="center">Titulo: <%= @post.title %></h2>
+<div class="well col-xs-8 col-xs-offset-2">
+ <% if @post.user.username %>
+ <ul class="listing">
+  <div class="row" align="center">
+   <div class="col-md-4 col-md-offset-4">
+    <li class="article-title"><%= link_to @post.user.username, user_path(@post.user) %></li>
+   </div>
+  </div>
+ </ul> 
+ <% end %>
+ <h4 class="center description"><strong>Descripción:</strong></h4>
+ <hr>
+ <%= simple_format(@post.body.html_safe) %>
+
+
+ 
+ <div class="article-actions">
+
+<% if current_user && current_user.id == @post.user_id %>
+       <%= link_to  "Editar", edit_post_path(@post), class: "btn btn-xs btn-primary" %>
+       <%= link_to "Borrar", @post, method: 'delete', data: { confirm: "¿Seguro quieres borrar este articulo?"}, class: "btn btn-xs btn-danger" %>
+<% end %>
+<%= link_to "Atras", posts_path, class: "btn btn-xs btn-success" %>
+<h4><% if session[:user_id] %></h4>
+                <%= link_to "Comentar", new_comment_path(post_id: @post.id), class: "btn btn-xs btn-primary" %>
+            <% else %>
+                <h4>incia sesion para comentar </h4>
+    <% end %>
+  </div>
+
+  <h4 class="center description">
+
+    <strong>Comentarios:</strong></h4>
+    <div>
+        <h3><% @post.comments.reverse.each do |c| %> </h3> 
+                <div style="border-style:solid; border-width: 1px;">
+                    <div id="single-comment">
+                        <h4><strong><%= c.body.html_safe %></strong></h4>
+                        <h5>hace: <%= c.user.created_at %></h5>
+                        <h6>usuario: <%= c.user.username %></h6>
+                    </div>
+                    <div class="article-actions">
+                        <% if current_user && current_user.id == c.user_id %>
+                        <%= link_to "Editar", edit_comment_path(c.id), class: "btn btn-xs btn-primary"%>
+                        <%= link_to "Borrar", comment_path(c.id), method: :delete, data: { confirm: "¿Seguro quieres borrar este comentario?"}, class: "btn btn-xs btn-danger" %>
+                        <% end %>
+                    </div>
+                </div>
+        <% end %>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,22 @@
+<h1 align="center">Posts</h1>
+  
+<% @posts.reverse.each do |post| %>
+  <div class="row"> 
+    <div class="col-xs-8 col-xs-offset-2">
+      <div class="well well-lg">
+        <div class="article-title">
+          <%= link_to post.title, post_path(post) %>
+        </div>
+        <div class="article-body">
+          <%= truncate(post.body.html_safe, length: 100) %>
+          <div class="article-meta-details">
+            <small>Creado por: <%= post.user.username if post.user_id %>,
+    hace: <%= time_ago_in_words(post.created_at) %>,ultima actualización hace:<%= time_ago_in_words(post.updated_at) %></small>
+          </div>
+        </div>
+        <div class="article-actions">
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

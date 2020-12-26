@@ -1,0 +1,20 @@
+<div id="sign-in">
+<h1>Iniciar Sesion</h1>
+  <%= form_tag(create_session_path, method: 'post') do %>
+    <div class="user">
+      <span class="username"><%= label_tag(:Usuario)%> 
+      <%= text_field_tag :username, nil, placeholder: 'Usuario'%></span>
+    </div>
+    </br>
+    <div class="password">
+      <%= label_tag(:contraseña)%>
+      <%= password_field_tag :password, nil, placeholder: 'Contraseña'%>
+    </div>
+    </br>
+    <button>
+      <h2>Inciar Sesion <%= submit_tag("Login")%> </h2>
+    </button>
+  <% end %>
+</div>
+
+
